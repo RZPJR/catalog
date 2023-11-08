@@ -1,0 +1,25 @@
+include:
+  - project: 'project-version3/erp-infra/gitlab-ci'
+    file:
+      - 'sonarqube-check.yml'
+      - 'build-image.yml'
+      - 'deploy-image.yml'
+      - 'importmap-shared-deps.yml'
+      - 'purge.yml'
+
+stages:
+  - test
+  - build
+  - deploy
+  - reconfig
+  - purge
+
+before_script:
+  - >
+    if [ "$CI_COMMIT_BRANCH" == "master" ]; then 
+      cp $ENV_PROD .env
+    elif [ "$CI_COMMIT_BRANCH" == "uat" ]; then 
+      cp $ENV_UAT .env
+    else
+      cp $ENV .env
+    fi

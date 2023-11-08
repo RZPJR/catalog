@@ -1,0 +1,3 @@
+# catalog
+
+mfe catalog module
